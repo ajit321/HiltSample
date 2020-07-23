@@ -1,0 +1,148 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'dagger.hilt.android.plugin'
+
+
+def config = rootProject.extensions.getByName("ext") // Create variable to access "ext"
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.hilt.hiltsample"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+
+        /*javaCompileOptions {
+            annotationProcessorOptions {
+                arguments.plusAssign(
+                        hashMapOf(
+                                "room.schemaLocation" to "$projectDir/schemas",
+                                "room.incremental" to "true",
+                                "room.expandProjection" to "true"
+                        )
+                )
+            }
+        }*/
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.buildFeatures.viewBinding = true
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    /*compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }*/
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    androidExtensions {
+        experimental = true
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    kapt {
+        generateStubs = true
+    }
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+
+/*tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}*/
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    // Kotlin
+    implementation config.Dependencies.kotlin
+    // Coroutines
+    implementation(config.Coroutines.core)
+    implementation(config.Coroutines.android)
+
+    // Android
+    implementation config.Android.coreKtx
+    implementation config.Android.appcompat
+    implementation(config.Android.constraintLayout)
+    implementation(config.Android.activityKtx)
+    implementation(config.Android.swipeRefreshLayout)
+
+    // Architecture Components
+    implementation(config.Dependencies.viewModel)
+    implementation(config.Dependencies.liveData)
+
+    // Room components
+    implementation(config.Room.runtime)
+    kapt(config.Room.compiler)
+    implementation(config.Room.ktx)
+
+    // Material Design
+    implementation(config.Dependencies.materialDesign)
+    implementation(config.Dependencies.materialDialog)
+
+    // Coil-kt
+    implementation(config.Dependencies.coil)
+
+    // Retrofit
+    implementation(config.Dependencies.retrofit)
+
+    // Moshi
+    implementation(config.Moshi.kotlin)
+    implementation(config.Moshi.retrofitConverter)
+    kapt(config.Moshi.codeGen)
+    implementation(config.Moshi.serialization)
+    implementation(config.Moshi.gGsonVer)
+    implementation(config.Moshi.interceptorVer)
+    implementation(config.Moshi.rGsonVer)
+    implementation(config.Moshi.moshiVersion)
+
+    // Hilt + Dagger
+    implementation(config.Hilt.hiltAndroid)
+    implementation(config.Hilt.hiltViewModel)
+    kapt(config.Hilt.daggerCompiler)
+    kapt(config.Hilt.hiltCompiler)
+
+    // Testing
+    testImplementation(config.Testing.core)
+    testImplementation(config.Testing.coroutines)
+    testImplementation(config.Testing.room)
+    testImplementation(config.Testing.okHttp)
+    testImplementation config.Testing.jUnit
+
+    // Android Testing
+    androidTestImplementation config.Testing.extJUnit
+    androidTestImplementation config.Testing.espresso
+
+
+}
