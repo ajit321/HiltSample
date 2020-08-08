@@ -11,9 +11,9 @@ import kotlinx.serialization.Serializable
 
 @Entity(tableName = TABLE_NAME)
 @JsonClass(generateAdapter = true)
+
 @Serializable
 @Parcelize
-
 data class ProductsModel(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = 0,
@@ -30,34 +30,19 @@ data class ProductsModel(
 @Serializable
 @Parcelize
 data class Category(
-    @TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
-    /*
-    @Nu
-    val child_categories: List<Int>,*/
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "name")
     val name: String
-    /*@TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
-    @NonNull
-    @Embedded
-    val products: List<Product>*/
-) : Parcelable {
-    constructor() : this(0, "")//TODO: I think there is no need to have any constructors here
-}
+) : Parcelable
 
 @Serializable
 @Parcelize
 data class Ranking(
-    /* @TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
-     @Embedded
-     val products: List<RankingProduct>,*/
     @ColumnInfo(name = "ranking")
     val ranking: String
 
-) : Parcelable {
-    constructor() : this("")//TODO: I think there is no need to have any constructors here
-}
+) : Parcelable
 
 @Serializable
 data class Product(
@@ -65,8 +50,6 @@ data class Product(
     val id: Int,
     val name: String,
     val tax: Tax,
-    @TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
-    @Embedded
     val variants: List<Variant>
 )
 
