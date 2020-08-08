@@ -15,9 +15,8 @@ import kotlinx.serialization.Serializable
 @Parcelize
 
 data class ProductsModel(
-
-    /* @PrimaryKey(autoGenerate = true)
-     var id: Int? = 0,*/
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = 0,
     @ColumnInfo(name = "categories")
     val categories: List<Category>,
     @ColumnInfo(name = "rankings")
@@ -26,15 +25,12 @@ data class ProductsModel(
     companion object {
         const val TABLE_NAME = "product_posts"
     }
-
-    constructor() : this( emptyList(), emptyList())
-
 }
 
 @Serializable
 @Parcelize
 data class Category(
-    @TypeConverters(GenreConverter::class)
+    @TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
     /*
     @Nu
     val child_categories: List<Int>,*/
@@ -42,25 +38,25 @@ data class Category(
     val id: Int,
     @ColumnInfo(name = "name")
     val name: String
-    /*@TypeConverters(GenreConverter::class)
+    /*@TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
     @NonNull
     @Embedded
     val products: List<Product>*/
 ) : Parcelable {
-    constructor() : this(0, "")
+    constructor() : this(0, "")//TODO: I think there is no need to have any constructors here
 }
 
 @Serializable
 @Parcelize
 data class Ranking(
-    /* @TypeConverters(GenreConverter::class)
+    /* @TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
      @Embedded
      val products: List<RankingProduct>,*/
     @ColumnInfo(name = "ranking")
     val ranking: String
 
 ) : Parcelable {
-    constructor() : this("")
+    constructor() : this("")//TODO: I think there is no need to have any constructors here
 }
 
 @Serializable
@@ -69,7 +65,7 @@ data class Product(
     val id: Int,
     val name: String,
     val tax: Tax,
-    @TypeConverters(GenreConverter::class)
+    @TypeConverters(GenreConverter::class)//TODO: I think there is no need to use typeconverters here
     @Embedded
     val variants: List<Variant>
 )

@@ -12,26 +12,26 @@ import java.util.*
 class GenreConverter {
 
     @TypeConverter
-    fun fromCategoryString(value: String): ArrayList<Category> {
-        val type = object : TypeToken<ArrayList<Category>>() {}.type
+    fun fromCategoryString(value: String): List<Category> {
+        val type = object : TypeToken<List<Category>>() {}.type
         return Gson().fromJson(value, type)
     }
 
     @TypeConverter
-    fun fromCategoryArrayList(list: ArrayList<Category>): String {
-        val type = object : TypeToken<ArrayList<Category>>() {}.type
+    fun fromCategoryArrayList(list: List<Category>): String {
+        val type = object : TypeToken<List<Category>>() {}.type
         return Gson().toJson(list, type)
     }
 
     @TypeConverter
-    fun fromString(value: String): ArrayList<Ranking> {
-        val type = object : TypeToken<ArrayList<Ranking>>() {}.type
+    fun fromString(value: String): List<Ranking> {
+        val type = object : TypeToken<List<Ranking>>() {}.type
         return Gson().fromJson(value, type)
     }
 
     @TypeConverter
-    fun fromArrayList(list: ArrayList<Ranking>): String {
-        val type = object : TypeToken<ArrayList<Ranking>>() {}.type
+    fun fromArrayList(list: List<Ranking>): String {
+        val type = object : TypeToken<List<Ranking>>() {}.type
         return Gson().toJson(list, type)
     }
 
