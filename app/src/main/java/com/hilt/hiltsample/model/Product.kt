@@ -1,58 +1,66 @@
 package com.hilt.hiltsample.model
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
+import android.os.Parcelable
+import androidx.room.*
 import com.hilt.hiltsample.data.GenreConverter
 import com.hilt.hiltsample.model.ProductsModel.Companion.TABLE_NAME
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
 
 @Entity(tableName = TABLE_NAME)
 @JsonClass(generateAdapter = true)
 @Serializable
+@Parcelize
+
 data class ProductsModel(
 
-    @field:PrimaryKey(autoGenerate = true)
-    var id: Int? = 0,
-    @Embedded
+    /* @PrimaryKey(autoGenerate = true)
+     var id: Int? = 0,*/
+    @ColumnInfo(name = "categories")
     val categories: List<Category>,
-    @Embedded
+    @ColumnInfo(name = "rankings")
     val rankings: List<Ranking>
-) {
+) : Parcelable {
     companion object {
         const val TABLE_NAME = "product_posts"
     }
-    constructor() : this(0, emptyList(),emptyList())
+
+    constructor() : this( emptyList(), emptyList())
 
 }
 
 @Serializable
+@Parcelize
 data class Category(
-    /*@TypeConverters(GenreConverter::class)
+    @TypeConverters(GenreConverter::class)
+    /*
     @Nu
     val child_categories: List<Int>,*/
+    @ColumnInfo(name = "id")
     val id: Int,
+    @ColumnInfo(name = "name")
     val name: String
     /*@TypeConverters(GenreConverter::class)
     @NonNull
     @Embedded
     val products: List<Product>*/
-){
+) : Parcelable {
     constructor() : this(0, "")
 }
 
 @Serializable
+@Parcelize
 data class Ranking(
-   /* @TypeConverters(GenreConverter::class)
-    @Embedded
-    val products: List<RankingProduct>,*/
+    /* @TypeConverters(GenreConverter::class)
+     @Embedded
+     val products: List<RankingProduct>,*/
+    @ColumnInfo(name = "ranking")
     val ranking: String
 
-){
-    constructor() : this( "")
+) : Parcelable {
+    constructor() : this("")
 }
 
 @Serializable

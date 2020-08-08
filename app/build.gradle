@@ -106,6 +106,7 @@ dependencies {
     implementation(config.Room.runtime)
     kapt(config.Room.compiler)
     implementation(config.Room.ktx)
+    kapt 'android.arch.persistence.room:compiler:2.1.0'
 
     // Material Design
     implementation(config.Dependencies.materialDesign)
